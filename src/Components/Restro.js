@@ -1,7 +1,7 @@
-import React from "react";
-import Footer from './Footer'
-import Project from "./Project";
-import Restroslider from "./Restroslider"
+import React, { useState } from "react";
+import Footer from './Footer';
+import Restroslider from "./Restroslider";
+
 const dishes = [
   {
     id: 1,
@@ -47,50 +47,84 @@ const dishes = [
   }
 ];
 
-export default function RestaurantUI() {
+function Restaurant() {
+  const [selectedDish, setSelectedDish] = useState(null);
+
   return (
     <div className="font-sans">
-     
-      <nav className="bg-white shadow-md p-4 flex justify-between place-items-center items-center fixed top-0 w-full z-50">
-        <h1 className="text-2xl font-bold text-red-500">Foodie's Hub</h1>
-        <ul className="flex gap-6 text-gray-700 ml-60 flex">
-          <li><a href="/" className="hover:text-red-500">Home</a></li>
-          <li><a href="./menu" className="hover:text-red-500">Menu</a></li>
-          <li><a href="#" className="hover:text-red-500">About</a></li>
-          <li><a href="#" className="hover:text-red-500">Contact</a></li>
-          <li className="w-10"><Project/></li>
-        </ul>
-      </nav>
-
-      <section className="bg-[url('#')]bg-cover bg-center h-[400px] -mt-10 -mb-24  flex items-center justify-center">
+      <section className="bg-[url('#')] bg-cover bg-center h-[400px] -mt-10 -mb-24 flex items-center justify-center">
         <div className="bg-slate-500 bg-opacity-50 p-10 rounded-lg text-center text-white">
           <h2 className="text-4xl font-bold mb-4">Welcome to Foodie's Hub</h2>
           <p className="text-lg">Delicious meals, fast delivery, happy stomach!</p>
         </div>
       </section>
-      <Restroslider/>
 
-      
+      <Restroslider />
+
       <section className="p-10">
         <h3 className="text-3xl font-bold mb-6 text-center text-gray-800">Featured Dishes</h3>
-        <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
-          {dishes.map((dish) => (
-            <div key={dish.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
-              <img src={dish.image} alt={dish.name} className="w-full h-48 object-cover" />
+
+        {selectedDish ? (
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+           
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">
+              <img src={selectedDish.image} alt={selectedDish.name} className="w-full h-[400px] object-cover" />
               <div className="p-4">
-                <h4 className="text-xl font-semibold text-gray-800">{dish.name}</h4>
-                <p className="text-gray-600 text-sm">{dish.description}</p>
-                <div className="mt-2 text-red-500 font-bold">{dish.price}</div>
+                <h4 className="text-2xl font-semibold text-gray-800">{selectedDish.name}</h4>
+                <p className="text-gray-600">{selectedDish.description}</p>
+                <div className="mt-2 text-red-500 font-bold">{selectedDish.price}</div>
+                <button
+                  className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                  onClick={() => setSelectedDish(null)}
+                >
+                  Close
+                </button>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
-      <Footer/>
-      {/* <footer className="bg-gray-100 p-6 text-center text-gray-600">
-        &copy; {new Date().getFullYear()} Foodie's Hub. All rights reserved.
-      </footer> */}
 
+            <div>
+              <h4 className="text-xl font-bold mb-4 text-gray-700">You may also like</h4>
+              <div className="grid grid-cols-1 gap-4">
+                {dishes.filter(dish => dish.id !== selectedDish.id).slice(0, 5).map((dish) => (
+                  <div
+                    key={dish.id}
+                    className="flex items-center space-x-4 cursor-pointer hover:bg-gray-100 p-2 rounded"
+                    onClick={() => setSelectedDish(dish)}
+                  >
+                    <img src={dish.image} alt={dish.name} className="w-16 h-16 object-cover rounded" />
+                    <div>
+                      <h5 className="font-semibold text-gray-800">{dish.name}</h5>
+                      <p className="text-sm text-gray-600">{dish.price}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+         
+          <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
+            {dishes.map((dish) => (
+              <div
+                key={dish.id}
+                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer"
+                onClick={() => setSelectedDish(dish)}
+              >
+                <img src={dish.image} alt={dish.name} className="w-full h-48 object-cover" />
+                <div className="p-4">
+                  <h4 className="text-xl font-semibold text-gray-800">{dish.name}</h4>
+                  <p className="text-gray-600 text-sm">{dish.description}</p>
+                  <div className="mt-2 text-red-500 font-bold">{dish.price}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <Footer />
     </div>
   );
 }
+
+export default Restaurant;

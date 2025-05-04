@@ -31,7 +31,7 @@ function Project() {
 
       setNotifications(prev => [newNotification, ...prev]);
       setUnread(prev => prev + 1);
-    }, 1500);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
