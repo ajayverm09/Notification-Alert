@@ -1,19 +1,49 @@
 import React from "react";
-import Project from "./Project";
 import { Link } from "react-router-dom";
+import { FaHome, FaBriefcase, FaEnvelope, FaCog } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <nav className="bg-white p-4 flex justify-between items-center fixed top-0 w-full z-50 shadow-md">
+    <nav className="bg-white p-4 flex justify-center items-center fixed top-0 w-full z-50 shadow-md">
 
-      <h1 className="text-2xl font-bold text-red-500">Foodie's Hub</h1>
+      <ul className="flex gap-10 text-gray-700 items-center">
+        
+        {/* Home */}
+        <li className="group flex flex-col items-center cursor-pointer">
+          <Link to="/" className="flex flex-col items-center">
+            <FaHome size={24} className="text-gray-500 group-hover:text-blue-400 transition-colors duration-300" />
+            <span className="mt-2 text-sm text-transparent group-hover:text-blue-400 transition-all duration-300">Home</span>
+            <span className="mt-1 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+          </Link>
+        </li>
 
-      <ul className="flex gap-6 text-gray-700 items-center">
-      <Link to="/" className="hover:text-red-600">Home</Link>
-      <Link to="/menu" className="hover:text-red-600">Menu</Link>
-      <Link to="/about" className="hover:text-red-600">About</Link>
-      <Link to="/contact" className="hover:text-red-600">Contact</Link>
-      <li className="w-10"><Project /></li>
+        {/* Work */}
+        <li className="group flex flex-col items-center cursor-pointer">
+          <Link to="/menu" className="flex flex-col items-center">
+            <FaBriefcase size={24} className="text-gray-500 group-hover:text-blue-400 transition-colors duration-300" />
+            <span className="mt-2 text-sm text-transparent group-hover:text-blue-400 transition-all duration-300">Work</span>
+            <span className="mt-1 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+          </Link>
+        </li>
+
+        {/* Contact */}
+        <li className="group flex flex-col items-center cursor-pointer">
+          <Link to="/contact" className="flex flex-col items-center">
+            <FaEnvelope size={24} className="text-gray-500 group-hover:text-blue-400 transition-colors duration-300" />
+            <span className="mt-2 text-sm text-transparent group-hover:text-blue-400 transition-all duration-300">Mail</span>
+            <span className="mt-1 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+          </Link>
+        </li>
+
+        {/* Settings */}
+        <li className="group flex flex-col items-center cursor-pointer">
+          <Link to="/settings" className="flex flex-col items-center">
+            <FaCog size={24} className="text-gray-500 group-hover:text-blue-400 transition-colors duration-300" />
+            <span className="mt-2 text-sm text-transparent group-hover:text-blue-400 transition-all duration-300">Settings</span>
+            <span className="mt-1 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+          </Link>
+        </li>
+
       </ul>
 
     </nav>
