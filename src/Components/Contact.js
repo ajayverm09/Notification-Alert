@@ -17,7 +17,7 @@ function Contact() {
 
     toast.success(`Thank you for contacting us, ${formData.name}!`, {
       position: "top-right",
-      autoClose: 3000,
+      autoClose: 5000,
     });
 
     setFormData({ name: "", email: "", message: "" });

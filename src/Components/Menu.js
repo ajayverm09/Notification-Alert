@@ -54,7 +54,7 @@ const menuItems = [
     setShowPopup(false);
     toast.success(`✅ Order Placed for "${selectedItem.name}"!`, {
       position: "top-right",
-      autoClose: 3000,
+      autoClose: 5000,
     });
     setFormData({
       name: "",
@@ -108,7 +108,7 @@ const menuItems = [
                 placeholder="Pincode"
                 value={formData.pincode}
                 onChange={handleInputChange}
-                maxLength="5"
+                maxLength="6"
                 pattern="[0-9]{6}"
                 required
                 className="w-full p-2 border rounded"
