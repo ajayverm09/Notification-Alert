@@ -8,11 +8,11 @@ const Navbar = () => {
 
       <h1 className="text-2xl font-bold text-red-500">Foodie's Hub</h1>
 
-      <ul className="flex gap-6 text-gray-700 items-center">
-      <Link to="/" className="hover:text-red-600">Home</Link>
-      <Link to="/menu" className="hover:text-red-600">Menu</Link>
-      <Link to="/about" className="hover:text-red-600">About</Link>
-      <Link to="/contact" className="hover:text-red-600">Contact</Link>
+      <ul className="flex gap-6 text-gray-700 items-center text-2xl">
+      <Link to="/" className="hover:text-red-600 border-b-2 border-transparent hover:border-red-600 border-l-2 rounded transition-all duration-300">Home</Link>
+      <Link to="/menu" className="hover:text-red-600 border-b-2 border-transparent hover:border-red-600 border-l-2 rounded transition-all duration-300">Menu</Link>
+      <Link to="/about" className="hover:text-red-600 border-b-2 border-transparent hover:border-red-600 border-l-2 rounded transition-all duration-300">About</Link>
+      <Link to="/contact" className="hover:text-red-600 border-b-2 border-transparent hover:border-red-600 border-l-2 rounded transition-all duration-300">Contact</Link>
       <li className="w-10"><Project /></li>
       </ul>
 
