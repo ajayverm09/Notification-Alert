@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from './Footer';
 import Restroslider from "./Restroslider";
+import Popup from "./Popup"; // 👉 Import Popup component here
 
 const dishes = [
   {
@@ -49,6 +50,39 @@ const dishes = [
 
 function Restaurant() {
   const [selectedDish, setSelectedDish] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    mobile: "",
+    address: "",
+    pincode: "",
+    payment: "Cash On Delivery (COD)",
+  });
+
+  useEffect(() => {
+    if (selectedDish) {
+      setFormData((prev) => ({
+        ...prev,
+        payment: selectedDish.price,
+      }));
+    }
+  }, [selectedDish]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Order placed:", formData);
+    alert("Order placed successfully!");
+    setShowPopup(false);
+  };
 
   return (
     <div className="font-sans">
@@ -66,19 +100,27 @@ function Restaurant() {
 
         {selectedDish ? (
           <div className="grid md:grid-cols-2 gap-6 items-start">
-           
             <div className="bg-white rounded-xl shadow-md overflow-hidden">
               <img src={selectedDish.image} alt={selectedDish.name} className="w-full h-[400px] object-cover" />
               <div className="p-4">
                 <h4 className="text-2xl font-semibold text-gray-800">{selectedDish.name}</h4>
                 <p className="text-gray-600">{selectedDish.description}</p>
                 <div className="mt-2 text-red-500 font-bold">{selectedDish.price}</div>
-                <button
-                  className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                  onClick={() => setSelectedDish(null)}
-                >
-                  Close
-                </button>
+
+                <div className="flex gap-4 mt-4">
+                  <button
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    onClick={() => setSelectedDish(null)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                    onClick={() => setShowPopup(true)}
+                  >
+                    Order Now
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -102,7 +144,6 @@ function Restaurant() {
             </div>
           </div>
         ) : (
-         
           <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
             {dishes.map((dish) => (
               <div
@@ -121,6 +162,14 @@ function Restaurant() {
           </div>
         )}
       </section>
+
+      <Popup
+        formData={formData}
+        handleInputChange={handleInputChange}
+        handleSubmit={handleSubmit}
+        onClose={() => setShowPopup(false)}
+        show={showPopup}
+      />
 
       <Footer />
     </div>

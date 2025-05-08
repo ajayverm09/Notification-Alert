@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import {toast,ToastContainer } from "react-toastify";
-const menuItems = [ 
-  
+import { toast, ToastContainer } from "react-toastify";
+import Popup from "./Popup";
+
+const menuItems = [
   { id: 1, name: "Margherita Pizza", price: 199, img: "https://cookingitalians.com/wp-content/uploads/2024/11/Margherita-Pizza.jpg" },
   { id: 2, name: "Paneer Tikka", price: 249, img: "https://shreyaskitchen.com/wp-content/uploads/2024/04/paneer-tikka-roll-1.jpg" },
   { id: 3, name: "Veg Burger", price: 149, img: "https://images.immediate.co.uk/production/volatile/sites/30/2020/10/Secret-Veg-Cheeseburgers-c981dd6.jpg" },
@@ -20,13 +21,12 @@ const menuItems = [
   { id: 13, name: "Gulab Jamun", price: 79, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3aJrkMZfZWaRkqQu36Y9TBzYlCrkKHvy7mw&s" },
   { id: 14, name: "Ice Cream Sundae", price: 129, img: "https://www.detroitnews.com/gcdn/presto/2022/06/27/PDTN/8c538779-a62e-4b4d-bc18-8213f8df6298-food-icecream-7784994a-f3f2-11ec-a9c7-cbc274649d15.jpg" },
   { id: 15, name: "Fruit Salad", price: 99, img: "https://www.allrecipes.com/thmb/ggbf50E1-B3B6oFCfS2zq_O0pe4=/0x512/filters:no_upscale():max_bytes(150000):strip_icc()/14147very-easy-fruit-saladChefMo4x3-07a6310c2aab4726a1a8bef08061abfa.jpg" },
-
- 
   { id: 16, name: "Cold Coffee", price: 99, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR331FC1GRa844z77pMi05Oy-fLPYNOe5qjIA&s" },
   { id: 17, name: "Lemon Mojito", price: 89, img: "https://yogaofcooking.co/wp-content/uploads/2020/06/mojito-3.jpg" },
-  { id: 18, name: "Mango Lassi", price: 79, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS22285ztkaIeZOUAzL_gF1vuYXYMbBgK1EYA&s" } ];
+  { id: 18, name: "Mango Lassi", price: 79, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS22285ztkaIeZOUAzL_gF1vuYXYMbBgK1EYA&s" } 
+];
 
-  function Menu() {
+function Menu() {
   const [order, setOrder] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -45,7 +45,7 @@ const menuItems = [
   };
 
   const handleInputChange = (e) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -67,82 +67,18 @@ const menuItems = [
 
   return (
     <div className="max-w-7xl mx-auto p-8">
-      
-      {showPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-8 rounded-xl w-full max-w-md">
-            <h2 className="text-2xl font-bold mb-4 text-center">User Details</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-                className="w-full p-2 border rounded"
-              />
-              <input
-                type="tel"
-                name="mobile"
-                placeholder="Mobile Number"
-                value={formData.mobile}
-                onChange={handleInputChange}
-                maxLength="10"
-                pattern="[0-9]{10}"
-                required
-                className="w-full p-2 border rounded"
-              />
-              <textarea
-                name="address"
-                type="text"
-                placeholder="Full Address"
-                value={formData.address}
-                onChange={handleInputChange}
-                required
-                className="w-full p-2 border rounded"
-              />
-              <input
-                type="tel"
-                name="pincode"
-                placeholder="Pincode"
-                value={formData.pincode}
-                onChange={handleInputChange}
-                maxLength="6"
-                pattern="[0-9]{6}"
-                required
-                className="w-full p-2 border rounded"
-              />
-              <input
-                type="text"
-                name="payment"
-                value={formData.payment}
-                readOnly
-                className="w-full p-2 border rounded bg-gray-100"
-              />
-              <div className="flex justify-between">
-                <button
-                  type="button"
-                  onClick={() => setShowPopup(false)}
-                  className="px-4 py-2 bg-gray-400 text-white rounded"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-green-600 text-white rounded"
-                >
-                  Place Order
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-    
-      <div>
-      <h1 className="text-4xl font-bold pt-20 text-center mb-10 text-red-500">🍽️ Our Delicious Menu</h1>
-      
+      <Popup
+        show={showPopup}
+        formData={formData}
+        handleInputChange={handleInputChange}
+        handleSubmit={handleSubmit}
+        onClose={() => setShowPopup(false)}
+      />
+
+      <h1 className="text-4xl font-bold pt-20 text-center mb-10 text-red-500">
+        🍽️ Our Delicious Menu
+      </h1>
+
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
         {menuItems.map((item) => (
           <div
@@ -167,9 +103,10 @@ const menuItems = [
           </div>
         ))}
       </div>
-    </div>
-    <ToastContainer/>
+
+      <ToastContainer />
     </div>
   );
 }
+
 export default Menu;
